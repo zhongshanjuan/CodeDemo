@@ -1,0 +1,25 @@
+响应式原理
+
+new Vue({data: {
+          msg: "123",
+          age: 21,},})
+          
+遍历属性修改getset 响应式属性
+每个属性 new Dep() 用于储存watcher
+渲染html compiler 遍历node替换插值语法{{msg}} 和指令 v-text/v-model
+更新html 获取msg值替换到插值/指令时 new Watcher 
+new Watcher 时赋值给Dep.target  Dep.target= this;
+比较新旧数据时触发get 
+this.oldValue = vm[key];
+把watcher 添加进dep
+Dep.target && dep.addSub(Dep.target);
+
+更新时触发set 
+dep.notify();
+遍历dep中的每个watcher (一个属性一个dep 每次插值语法和指令 都new Watcher)
+更新html
+(newValue)=>{
+    node.textContent = newValue
+}
+
+
